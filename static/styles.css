@@ -101,3 +101,11 @@ iframe {
   height: 100%;
   border: 0;
 }
+.form-control,
+.btn,
+.contact-form,
+.form-group,
+.map-container,
+textarea {
+    border-radius: 0 !important;
+}
