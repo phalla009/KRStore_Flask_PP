@@ -507,6 +507,12 @@ def product():
 @app.get('/about')
 def about():
     return render_template('front/about.html')
+@app.get('/jinja')
+def jinja():
+    name = "Phalla"
+    gender = "M"
+    age = "18"
+    return render_template('front/jinja.html',name=name,gender=gender,age=age)
 
 if __name__ == '__main__':
     app.run()
