@@ -60,7 +60,15 @@
                             <p class="product-title mb-0">{{ item['title'] }}</p>
                         </div>
                         <div class="card-footer">
-                            <input type="button" class="btn btn-sm btn-outline-primary w-100" value="Add To Cart">
+                            <input
+                                    type="button"
+                                    class="btn btn-sm btn-outline-primary w-100 btn_add_to_cart"
+                                    value="Add To Cart"
+                                    data-id="{{ item['id'] }}"
+                                    data-title="{{ item['title'] }}"
+                                    data-image="{{ item['image'] }}"
+                                    data-price="{{ item['price'] }}"
+                            >
                         </div>
                     </div>
                 </div>
