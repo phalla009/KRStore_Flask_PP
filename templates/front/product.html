@@ -7,7 +7,7 @@
                 <div class="col-md-3 col-sm-12 mb-2">
                     <div class="card">
                         <div class="product-image">
-                            <img src="{{ item['thumbnail'] }}"
+                            <img src="{{ item['image'] }}"
                                  style="height: 200px; object-fit: contain"
                                  class="card-img-top" alt="Product Image">
                             <div class="discount-badge">{{ item['category'] }}</div>
@@ -26,7 +26,7 @@
                                     value="Add To Cart"
                                     data-id="{{ item['id'] }}"
                                     data-title="{{ item['title'] }}"
-                                    data-image="{{ item['thumbnail'] }}"
+                                    data-image="{{ item['image'] }}"
                                     data-price="{{ item['price'] }}"
                             >
                         </div>
