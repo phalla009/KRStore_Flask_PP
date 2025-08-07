@@ -7,7 +7,7 @@
                 <div class="col-md-3 col-sm-12 mb-2">
                     <div class="card">
                         <div class="product-image">
-                            <img src="{{ item['image'] }}"
+                            <img src="{{ item['thumbnail'] }}"
                                  style="height: 200px; object-fit: contain"
                                  class="card-img-top" alt="Product Image">
                             <div class="discount-badge">{{ item['category'] }}</div>
@@ -20,7 +20,15 @@
                             <p class="product-title mb-0">{{ item['title'] }}</p>
                         </div>
                         <div class="card-footer">
-                            <input type="button" class="btn btn-sm btn-outline-primary w-100" value="Add To Cart">
+                            <input
+                                    type="button"
+                                    class="btn btn-sm btn-outline-primary w-100 btn_add_to_cart"
+                                    value="Add To Cart"
+                                    data-id="{{ item['id'] }}"
+                                    data-title="{{ item['title'] }}"
+                                    data-image="{{ item['thumbnail'] }}"
+                                    data-price="{{ item['price'] }}"
+                            >
                         </div>
                     </div>
                 </div>
