@@ -59,15 +59,20 @@
                             </p>
                             <p class="product-title mb-0">{{ item['title'] }}</p>
                         </div>
-                        <div class="card-footer">
+                       <div class="card-footer">
+                            <a href="{{ url_for('product_detail', id=item['id']) }}"
+                               class="btn btn-sm btn-outline-secondary w-100 mb-1">
+                                View
+                            </a>
+
                             <input
-                                    type="button"
-                                    class="btn btn-sm btn-outline-primary w-100 btn_add_to_cart"
-                                    value="Add To Cart"
-                                    data-id="{{ item['id'] }}"
-                                    data-title="{{ item['title'] }}"
-                                    data-image="{{ item['image'] }}"
-                                    data-price="{{ item['price'] }}"
+                                type="button"
+                                class="btn btn-sm btn-outline-primary w-100 btn_add_to_cart"
+                                value="Add To Cart"
+                                data-id="{{ item['id'] }}"
+                                data-title="{{ item['title'] }}"
+                                data-image="{{ item['image'] }}"
+                                data-price="{{ item['price'] }}"
                             >
                         </div>
                     </div>

@@ -270,6 +270,13 @@ def product():
 @app.get('/about')
 def about():
     return render_template('front/about.html')
+@app.route('/product/<int:id>')
+def product_detail(id):
+    product = next((p for p in products if p['id'] == id), None)
+    if product is None:
+        return "Product not found", 404
+    return render_template('front/product_detail.html', product=product)
+
 @app.get('/jinja')
 def jinja():
     name = "Phalla"
