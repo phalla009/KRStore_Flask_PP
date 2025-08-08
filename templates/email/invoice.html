@@ -1,0 +1,44 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Invoice - Order #{{ order.order_id }}</title>#}
+{#</head>#}
+{#<body>#}
+{#    <h2>🧾 Invoice - Order #{{ order.order_id }}</h2>#}
+{#    <p>Hello {{ customer.firstName }} {{ customer.lastName }},</p>#}
+{##}
+{#    <p>Thank you for shopping with us. Below is your order summary:</p>#}
+{##}
+{#    <table border="1" cellpadding="8" cellspacing="0" width="100%">#}
+{#        <thead>#}
+{#            <tr>#}
+{#                <th>Product</th>#}
+{#                <th>Qty</th>#}
+{#                <th>Price</th>#}
+{#                <th>Total</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for item in order.items %}#}
+{#            <tr>#}
+{#                <td>{{ item.title }}</td>#}
+{#                <td>{{ item.qty }}</td>#}
+{#                <td>${{ "%.2f"|format(item.price) }}</td>#}
+{#                <td>${{ "%.2f"|format(item.qty * item.price) }}</td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{##}
+{#    <p><strong>Total Amount:</strong> ${{ "%.2f"|format(order.total) }}</p>#}
+{##}
+{#    <hr>#}
+{#    <p><strong>Shipping Info:</strong><br>#}
+{#    {{ customer.address }}, {{ customer.city }}, {{ customer.country }} {{ customer.zip }}<br>#}
+{#    Email: {{ customer.email }}<br>#}
+{#    Phone: {{ customer.phone }}</p>#}
+{##}
+{#    <p>🙏 Thank you for your purchase!</p>#}
+{#</body>#}
+{#</html>#}
