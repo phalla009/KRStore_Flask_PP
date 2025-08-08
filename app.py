@@ -244,6 +244,11 @@ products = [
     }
   }
 ]
+@app.route('/Category/<category_name>')
+def category_page(category_name):
+    filtered_products = [p for p in products if p['category'].lower() == category_name.lower()]
+    return render_template('front/category.html', products=filtered_products, category=category_name.title())
+
 @app.get('/')
 @app.get('/home')
 def home():

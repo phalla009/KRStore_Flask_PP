@@ -5,6 +5,7 @@
     <title>KR Store</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/styles.css">
+    <link rel="icon" href="/static/image/logo.png" type="image/x-icon">
 </head>
 <body>
 <div class="container-fluid p-0 m-0">
@@ -22,6 +23,17 @@
                 <li class="nav-item {% if request.path.startswith('/product') %}active{% endif %}">
                     <a class="nav-link" href="/product">Product</a>
                 </li>
+                   <li class="nav-item dropdown {% if request.path.startswith('/Category') %}active{% endif %}">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCountry" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Category
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCountry">
+                            <a class="dropdown-item" href="/Category/men's clothing">Men's clothing</a>
+                            <a class="dropdown-item" href="/Category/Jewelery">Jewelery</a>
+                            <a class="dropdown-item" href="/Category/Electronics">Electronics</a>
+                            <a class="dropdown-item" href="/Category/women's clothing">Women's clothing</a>
+                        </div>
+                   </li>
                 <li class="nav-item {% if request.path.startswith('/contact') %}active{% endif %}">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>

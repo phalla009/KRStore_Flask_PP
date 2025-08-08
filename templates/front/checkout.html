@@ -107,10 +107,9 @@
         };
 
         const cart_list = JSON.parse(localStorage.getItem('cart_list') ?? '[]');
-
         let productLines = cart_list.map((item, index) => {
-            return `🛒 ${index + 1}. ${item.title} x${item.qty} = $${(item.qty * item.price).toFixed(2)}`;
-        }).join('\n');
+                return `🛒 ${index + 1}. ${item.title} x${item.qty} = $${(item.qty * item.price).toFixed(2)}\n🖼️ ${item.image}`;
+            }).join('\n\n');
 
         // Calculate total USD and KHR
         let totalUSD = cart_list.reduce((sum, item) => sum + (item.qty * item.price), 0);
