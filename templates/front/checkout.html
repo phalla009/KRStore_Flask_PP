@@ -90,82 +90,122 @@
         </div>
     </div>
 </div>
-<script>
-    document.getElementById("checkoutForm").addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const form = e.target;
-        const data = {
-            firstName: form.first_name.value,
-            lastName: form.last_name.value,
-            address: form.address.value,
-            city: form.city.value,
-            country: form.country.value,
-            zip: form.zip.value,
-            email: form.email.value,
-            phone: form.phone.value,
-        };
-
-        const cart_list = JSON.parse(localStorage.getItem('cart_list') ?? '[]');
-        let productLines = cart_list.map((item, index) => {
-                return `🛒 ${index + 1}. ${item.title} x${item.qty} = $${(item.qty * item.price).toFixed(2)}\n🖼️ ${item.image}`;
-            }).join('\n\n');
-
-        // Calculate total USD and KHR
-        let totalUSD = cart_list.reduce((sum, item) => sum + (item.qty * item.price), 0);
-        let totalKHR = totalUSD * 4100;
-
-        // Update DOM total labels
-        document.getElementById("label_total_usd").textContent = `$${totalUSD.toFixed(2)}`;
-        document.getElementById("label_total_khr").textContent = `៛${totalKHR.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;
-
-        // Final message to Telegram
-        const message = `
-            =======📦 New Checkout Order=======
-            👤 Name: ${data.firstName} ${data.lastName}
-            🏠 Address: ${data.address}, ${data.city}, ${data.country} ${data.zip}
-            📧 Email: ${data.email}
-            📱 Phone: ${data.phone}
-
-             ---------- 📦 Order Summary ----------
-            ${productLines}
-
-            💵 Total: $${totalUSD.toFixed(2)}
-            🇰🇭 Total in KHR: ៛${totalKHR.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-                `;
-
-        const botToken = "8282363808:AAGT0lAZyrs8Q5gTUDY2hgpfBDc_4KfepIk";
-        const chatId = "@khchelrien2024";
-
-        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                chat_id: chatId,
-                text: message,
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
+{#<script>#}
+{#    document.getElementById("checkoutForm").addEventListener("submit", function (e) {#}
+{#        e.preventDefault();#}
+{##}
+{#        const form = e.target;#}
+{#        const data = {#}
+{#            firstName: form.first_name.value,#}
+{#            lastName: form.last_name.value,#}
+{#            address: form.address.value,#}
+{#            city: form.city.value,#}
+{#            country: form.country.value,#}
+{#            zip: form.zip.value,#}
+{#            email: form.email.value,#}
+{#            phone: form.phone.value,#}
+{#        };#}
+{##}
+{#        const cart_list = JSON.parse(localStorage.getItem('cart_list') ?? '[]');#}
+{#        let productLines = cart_list.map((item, index) => {#}
+{#                return `🛒 ${index + 1}. ${item.title} x${item.qty} = $${(item.qty * item.price).toFixed(2)}\n🖼️ ${item.image}`;#}
+{#            }).join('\n\n');#}
+{##}
+{#        // Calculate total USD and KHR#}
+{#        let totalUSD = cart_list.reduce((sum, item) => sum + (item.qty * item.price), 0);#}
+{#        let totalKHR = totalUSD * 4100;#}
+{##}
+{#        // Update DOM total labels#}
+{#        document.getElementById("label_total_usd").textContent = `$${totalUSD.toFixed(2)}`;#}
+{#        document.getElementById("label_total_khr").textContent = `៛${totalKHR.toLocaleString('en-US', { minimumFractionDigits: 2 })}`;#}
+{##}
+{#        // Final message to Telegram#}
+{#        const message = `#}
+{#            =======📦 New Checkout Order=======#}
+{#            👤 Name: ${data.firstName} ${data.lastName}#}
+{#            🏠 Address: ${data.address}, ${data.city}, ${data.country} ${data.zip}#}
+{#            📧 Email: ${data.email}#}
+{#            📱 Phone: ${data.phone}#}
+{##}
+{#             ---------- 📦 Order Summary ----------#}
+{#            ${productLines}#}
+{##}
+{#            💵 Total: $${totalUSD.toFixed(2)}#}
+{#            🇰🇭 Total in KHR: ៛${totalKHR.toLocaleString('en-US', { minimumFractionDigits: 2 })}#}
+{#                `;#}
+{##}
+{#        const botToken = "8282363808:AAGT0lAZyrs8Q5gTUDY2hgpfBDc_4KfepIk";#}
+{#        const chatId = "@khchelrien2024";#}
+{##}
+{#        const url = `https://api.telegram.org/bot${botToken}/sendMessage`;#}
+{##}
+{#        fetch(url, {#}
+{#            method: "POST",#}
+{#            headers: {#}
+{#                "Content-Type": "application/json",#}
+{#            },#}
+{#            body: JSON.stringify({#}
+{#                chat_id: chatId,#}
+{#                text: message,#}
+{#            }),#}
+{#        })#}
+{#        .then(response => response.json())#}
+{#        .then(data => {#}
             {#alert("Order sent to Telegram!");#}
+{#            form.reset();#}
+{#            localStorage.removeItem('cart_list');#}
+{##}
+{#            // Reset displayed totals#}
+{#            document.getElementById("label_total_usd").textContent = "$0.00";#}
+{#            document.getElementById("label_total_khr").textContent = "៛0.00";#}
+{#        })#}
+{#        .catch(error => {#}
+{#            alert("Error sending message.");#}
+{#            console.error("Telegram Error:", error);#}
+{#        });#}
+{#    });#}
+{#</script>#}
+
+<script>
+document.getElementById("checkoutForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+        firstName: form.first_name.value,
+        lastName: form.last_name.value,
+        address: form.address.value,
+        city: form.city.value,
+        country: form.country.value,
+        zip: form.zip.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        cart: JSON.parse(localStorage.getItem('cart_list') ?? '[]')
+    };
+
+    fetch("/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(resData => {
+        if (resData.status === "success") {
+            alert("Order sent successfully!");
             form.reset();
             localStorage.removeItem('cart_list');
-
-            // Reset displayed totals
             document.getElementById("label_total_usd").textContent = "$0.00";
             document.getElementById("label_total_khr").textContent = "៛0.00";
-        })
-        .catch(error => {
-            alert("Error sending message.");
-            console.error("Telegram Error:", error);
-        });
+        } else {
+            alert("Failed to send order: " + resData.message);
+        }
+    })
+    .catch(error => {
+        alert("Error sending order.");
+        console.error("Checkout Error:", error);
     });
+});
 </script>
-
 
 <script>
 
