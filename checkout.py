@@ -21,18 +21,19 @@ def process_checkout(app, mail, data):
     )
 
     message = f"""
-=======📦 New Checkout Order=======
+=====📦 New Order =====
 
 👤 Name: {data['first_name']} {data['last_name']}
 🏠 Address: {data['address']}, {data['city']}, {data['country']} {data['zip']}
 📧 Email: {data['email']}
 📱 Phone: {data['phone']}
 
----------- 📦 Order Summary ----------
+---- 📦 Order Summary ----
 {product_lines}
-
-💵 Total: ${total_usd:.2f}
-🇰🇭 Total in KHR: ៛{total_khr:,.2f}
+====================
+Total:
+💵 USD: ${total_usd:.2f}
+🇰🇭 KHR: ៛{total_khr:,.2f}
 """
 
     # Send Telegram message

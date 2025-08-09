@@ -113,3 +113,31 @@ iframe {
 textarea {
     border-radius: 0 !important;
 }
+
+.social-icons a {
+    color: white;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+}
+
+.social-icons a:hover {
+    color: blue;
+    border-bottom: 3px solid #3b5998;
+}
+
+.social-icons a.twitter:hover {
+    color: #1da1f2;
+    border-bottom: 2px solid #1da1f2;
+}
+
+.social-icons a.instagram:hover {
+    color: #e4405f;
+    border-bottom: 2px solid #e4405f;
+}
+
+.social-icons a.youtube:hover {
+    color: red;
+    border-bottom: 2px solid red;
+}
