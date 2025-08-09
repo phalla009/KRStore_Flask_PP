@@ -1,7 +1,11 @@
 from flask import Flask, render_template, request, jsonify
-import config
-import requests
+from flask_mail import Mail
+
+from checkout import process_checkout
+
 app = Flask(__name__)
+app.config.from_object('config')
+mail = Mail(app)
 
 products = [
   {
@@ -251,6 +255,7 @@ products = [
 def home():
     module = 'home'
     return render_template('front/home.html', products=products)
+
 @app.get('/cart')
 def cart():
     return render_template('front/cart.html')
@@ -258,9 +263,11 @@ def cart():
 @app.get('/contact')
 def contact():
     return render_template('front/contact.html')
+
 @app.get('/product')
 def product():
   return render_template('front/product.html', products=products, module='product')
+
 @app.route('/Category/<category_name>')
 def category_page(category_name):
     filtered_products = [p for p in products if p['category'].lower() == category_name.lower()]
@@ -282,53 +289,10 @@ def checkout_page():
 
 @app.route("/checkout", methods=["POST"])
 def checkout():
+    data = request.json
     try:
-        data = request.json
-        print("Received data:", data)
-
-        def to_number(val):
-            try:
-                return int(val)
-            except:
-                try:
-                    return float(val)
-                except:
-                    return 0
-
-        total_usd = sum(to_number(item["qty"]) * to_number(item["price"]) for item in data["cart"])
-        total_khr = total_usd * config.USD_TO_KHR
-
-        product_lines = "\n\n".join(
-            f"🛒 {i+1}. {item['title']} x{item['qty']} = ${to_number(item['qty']) * to_number(item['price']):.2f}\n🖼️ {item['image']}"
-            for i, item in enumerate(data["cart"])
-        )
-
-        message = f"""
-=======📦 New Checkout Order=======
-👤 Name: {data['firstName']} {data['lastName']}
-🏠 Address: {data['address']}, {data['city']}, {data['country']} {data['zip']}
-📧 Email: {data['email']}
-📱 Phone: {data['phone']}
-
----------- 📦 Order Summary ----------
-{product_lines}
-
-💵 Total: ${total_usd:.2f}
-🇰🇭 Total in KHR: ៛{total_khr:,.2f}
-"""
-
-        url = f"https://api.telegram.org/bot{config.BOT_TOKEN}/sendMessage"
-        payload = {"chat_id": config.CHAT_ID, "text": message}
-        response = requests.post(url, json=payload)
-
-        print("Telegram response status:", response.status_code)
-        print("Telegram response text:", response.text)
-
-        if response.status_code == 200:
-            return jsonify({"status": "success"})
-        else:
-            return jsonify({"status": "error", "message": response.text}), 500
-
+        result = process_checkout(app, mail, data)
+        return jsonify(result)
     except Exception as e:
         print("Exception in /checkout:", e)
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -342,5 +306,5 @@ if __name__ == "__main__":
 #     age = "18"
 #     return render_template('front/jinja.html',name=name,gender=gender,age=age)
 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
