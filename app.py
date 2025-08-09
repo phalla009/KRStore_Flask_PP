@@ -1,6 +1,6 @@
+import os
 from flask import Flask, render_template, request, jsonify,redirect,url_for,flash
 from flask_mail import Mail,Message
-import os
 from checkout import process_checkout
 
 app = Flask(__name__)
