@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, jsonify
-from flask_mail import Mail
-
+from flask import Flask, render_template, request, jsonify,redirect,url_for,flash
+from flask_mail import Mail,Message
+import os
 from checkout import process_checkout
 
 app = Flask(__name__)
 app.config.from_object('config')
+app.secret_key = os.urandom(24)
 mail = Mail(app)
 
 products = [
@@ -260,8 +261,40 @@ def home():
 def cart():
     return render_template('front/cart.html')
 
-@app.get('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        email = request.form.get('email')  # Customer's email
+        subject = request.form.get('subject')
+        message = request.form.get('message')
+
+        # Email to shop owner
+        shop_body = f"From: {name} <{email}>\n\n{message}"
+
+        # Confirmation email to customer
+        customer_subject = "Thank you for contacting us!"
+        customer_body = f"Hi {name},\n\nThank you for reaching out. We have received your message:\n\nSubject: {subject}\nMessage: {message}\n\nWe will get back to you shortly.\n\nBest regards,\nKR STORE"
+
+        try:
+            # Email to shop
+            msg_shop = Message(subject=subject,
+                               recipients=['hphalla3@gmail.com'],
+                               body=shop_body)
+            mail.send(msg_shop)
+
+            # Confirmation email to customer
+            msg_customer = Message(subject=customer_subject,
+                                   recipients=[email],
+                                   body=customer_body)
+            mail.send(msg_customer)
+
+            flash('Message sent successfully! Confirmation email sent to you.', 'success')
+        except Exception as e:
+            flash(f'Failed to send message: {e}', 'danger')
+
+        return redirect(url_for('contact'))
+
     return render_template('front/contact.html')
 
 @app.get('/product')
@@ -299,12 +332,4 @@ def checkout():
 
 if __name__ == "__main__":
     app.run(debug=True)
-# @app.get('/jinja')
-# def jinja():
-#     name = "Phalla"
-#     gender = "M"
-#     age = "18"
-#     return render_template('front/jinja.html',name=name,gender=gender,age=age)
 
-# if __name__ == '__main__':
-#     app.run()

@@ -124,7 +124,7 @@ textarea {
 
 .social-icons a:hover {
     color: blue;
-    border-bottom: 3px solid #3b5998;
+    border-bottom: 2px solid blue;
 }
 
 .social-icons a.twitter:hover {
@@ -140,4 +140,8 @@ textarea {
 .social-icons a.youtube:hover {
     color: red;
     border-bottom: 2px solid red;
+}
+.social-icons a.github:hover {
+    color:purple;
+    border-bottom: 2px solid purple;
 }
