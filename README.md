@@ -1,7 +1,7 @@
--E-commerce/
--│
--├── static/
--│ ├── image/
+E-commerce/
+│
+├── static/
+│ ├── image/
 │ └── style.css
 │
 ├── templates/
